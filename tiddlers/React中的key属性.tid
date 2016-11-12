@@ -1,0 +1,7 @@
+created: 20161109015826771
+modified: 20161109020040782
+tags: React
+title: React中的key属性
+type: text/vnd.tiddlywiki
+
+React 会根据子组件中 `key` 属性的值来决定是否渲染该子组件，当 `key` 值保持不变（例如设为 `index` ）则不会发生组件更新。

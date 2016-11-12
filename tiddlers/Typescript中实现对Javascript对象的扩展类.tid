@@ -1,0 +1,35 @@
+created: 20161109153918002
+modified: 20161109165624789
+tags: Typescript
+title: Typescript中实现对Javascript对象的扩展类
+type: text/vnd.tiddlywiki
+
+根据[[官方文档|http://www.tslang.cn/docs/handbook/mixins.html]]，Mixins是一个很好的解决方案。
+
+需要注意的是，在对Object对象中存在的方法进行声明的时候，需要采用成员属性的方式，否则在Mixins的时候无法判断该方法是否有被重写。
+
+假设我们有一个准备作为基类的Javascript对象：
+
+```javascript
+//  Module Base
+  var A = {};
+  A.prototype.fn = function() {}
+```
+
+那么我们可以通过下面的方法继承这个基类：
+
+```typescript
+import * as Base from 'Base';
+
+class A {
+  fn:() => void;
+}
+
+applyMixins(A, Base.A);
+
+class B extends A {
+  fn = function() {}
+}
+```
+
+其中 `applyMixins` 方法参见官方文档中Mixins的部分进行实现，官方给出的例子只应用了新类型相对于基类的新增部分。

@@ -1,0 +1,9 @@
+created: 20161109171055644
+modified: 20161109171457266
+tags: fabric.js
+title: 向Canvas添加对象
+type: text/vnd.tiddlywiki
+
+在对Canvas进行对象的添加时，并非一定要通过 `Canvas.add(object)` 进行。为了避免添加的对象被渲染出来，可能通过其他方式进行添加，此时就需要注意调用 `setupState()`方法进行对象状态的初始化。
+
+未经过初始化的对象在使用时会出现 `originalState is undefine` 的报错。

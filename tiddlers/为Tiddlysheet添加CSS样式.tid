@@ -1,0 +1,9 @@
+created: 20161108163526061
+modified: 20161109015722154
+tags: Tiddlywiki CSS
+title: 为Tiddlysheet添加CSS样式
+type: text/vnd.tiddlywiki
+
+只需要新建一个带有 tag `$:/tags/Stylesheet` 的条目，在其中添加样式代码即可。
+ 
+示例：[[css-sample]]

@@ -1,0 +1,9 @@
+created: 20161108162843814
+modified: 20161108163033880
+tags: 
+title: $:/tags/Stylesheet
+type: text/vnd.tiddlywiki
+
+html body.tc-body {
+	background: red;
+}
