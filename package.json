@@ -1,0 +1,22 @@
+{
+  "name": "greendou-wiki",
+  "version": "1.0.0",
+  "description": "Greendou's Wiki.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GreenDou/greendou-wiki.git"
+  },
+  "author": "GreenDou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GreenDou/greendou-wiki/issues"
+  },
+  "homepage": "https://github.com/GreenDou/greendou-wiki#readme",
+  "devDependencies": {
+    "tiddlywiki": "^5.1.13"
+  }
+}
