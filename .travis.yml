@@ -6,7 +6,7 @@ install:
 script:
   - git config --global user.email "$GIT_EMAIL"
   - git config --global user.name "$GIT_NAME"
-    git config --global push.default simple
+  - git config --global push.default simple
   - git clone --depth 1 https://$GH_TOKEN@github.com/GreenDou/GreenDou.github.io.git dist
   - tiddlywiki --output ./dist/wiki --build index
 after_success:
