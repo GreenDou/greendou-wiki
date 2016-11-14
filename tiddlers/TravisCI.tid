@@ -1,6 +1,7 @@
 created: 20161109172136583
-modified: 20161109172149532
+modified: 20161114142459660
 tags: 前端
 title: TravisCI
 type: text/vnd.tiddlywiki
 
+具体参考：https://farseerfc.me/zhs/travis-push-to-github-pages-blog.html
