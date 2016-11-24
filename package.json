@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tiddlywiki --output ./dist/wiki --build index",
-    "start": "tiddlywiki --server"
+    "start": "tiddlywiki --server 5757"
   },
   "repository": {
     "type": "git",

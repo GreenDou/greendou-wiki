@@ -1,0 +1,9 @@
+created: 20161121024246363
+modified: 20161121061351356
+tags: 前端 测试
+title: 前端自动化测试的一些探索
+type: text/vnd.tiddlywiki
+
+多浏览器测试： Selenium
+
+像素对比：PhantomCSS
