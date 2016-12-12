@@ -1,0 +1,56 @@
+created: 20161205072934901
+draft.of: How can I use Webpack to expose multiple objects in one file by `expose-loader` and `export-loader`?
+draft.title: How can I use Webpack to expose multiple objects in one file by `expose-loader` and `export-loader`?
+modified: 20161205073653562
+tags: Typescript Webpack
+title: Draft of 'How can I use Webpack to expose multiple objects in one file by `expose-loader` and `export-loader`?'
+type: text/vnd.tiddlywiki
+
+Now I use `resolve.alias` like this: (module/a.js output with global variable `a` and `a_sub`)
+
+```javascript
+//  webpack.config.js
+
+var module_dir = path.resolve('module');
+var a_file = path.join(module_dir, 'a.js');
+
+//  ...
+  resolve: {
+    // Add '.ts' and '.tsx' as resolvable extensions.
+    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js'],
+    alias: {
+      a_module: a_file
+    }
+  },
+  module: {
+    loaders: {
+      {
+        test: a_file,
+        loader: 'exports?a&a_sub'
+      },
+      {
+        test: blocks_compressed,
+        loader: 'imports?GoogleBlockly=' + blockly_compressed + ',Blockly=>GoogleBlockly.Blockly,goog=>GoogleBlockly.goog'
+      },
+      {
+        test: /\.js$/,
+        include: /js\/blocks\/overrides_blockly/, //  For blockly override js files
+        exclude: /(node_modules)/,
+        loader: 'imports?GoogleBlockly=' + blockly_compressed + ',Blockly=>GoogleBlockly.Blockly,goog=>GoogleBlockly.goog'
+      },
+    }
+  }
+```
+
+Then declare and use blockly as a module:
+
+```ts
+// js_transition.d.ts
+declare module 'google_blockly' {
+  export let Blockly:Blockly;
+  export let goog:any;
+}
+
+// Using
+import {Blockly} from 'google_blockly';
+```

@@ -1,0 +1,110 @@
+created: 20161209073642193
+modified: 20161209085737184
+tags: React Typescript Redux
+title: TypeScript, React, and Redux
+type: text/vnd.tiddlywiki
+
+!Action
+
+
+!![[ redux-actions | https://github.com/acdlite/redux-actions]]
+
+通过`createAction`来生成Action。
+
+!!定义Action
+
+根据[[Typesafe Redux in TypeScript | http://michaellawrie.com/typesafe-redux-in-typescript]]以及[[ TypeScript, React, and Redux | http://www.mattgreer.org/articles/typescript-react-and-redux/ ]]，定义基础的 Action
+
+```typescript
+interface Action<T>{
+  readonly type:string;
+  readonly payload:T;
+}
+
+interface ActionCreator<T> {
+  readonly type:string
+  (payload:T):Action<T>
+}
+
+// Bind the action type to the payload creator to describe a new action creator.
+// 其中T是payload的类型,这里返回一个对应T的action creator。
+const actionCreator = <T>(type: string):ActionCreator<T> =>
+  Object.assign((payload:T):any => ({type, payload}), {type})
+
+// 对action的类型保护
+export const isType = <T>(action: Action<any>, actionCreator: ActionCreator<T>):
+  action is Action<T> => action.type === actionCreator.type
+
+
+// Example action creator:
+export interface ListItem {
+  readonly done: boolean
+  readonly description: string
+}
+
+export const createListItemAction =
+  actionCreator<ListItem>('CREATE_LIST_ITEM_ACTION_TYPE')
+```
+但是根据我司O神的几个观点，还需要再考虑一下更新：
+
+* Type guards are much nicer now. （比如我们可以用 instanceof 来代替 type 的比较）
+* const for variable declarations and readonly for fields in interfaces give us something close to Immutable
+* We now have tagged union types which allow us to distinguish at runtime what type of action an action is, and know what data is associated with it. We're already doing some of this in Kitten, though our pattern is a little convoluted by optimizations because the interpreter needs to be very fast. Do talk to me when you want to know more about it.
+
+
+!!Reducer
+
+同样根据 http://michaellawrie.com/typesafe-redux-in-typescript ，可以定义以下reducer：
+
+```typescript
+//listItemsReducers.ts
+
+import { ListItem, createListItemAction } from 'listItemsActions'
+import Immutable = require('immutable')
+
+type ListItems = Immutable.List<ListItem>
+
+export interface ListItemsState {
+  readonly listItems: ListItems 
+}
+
+export const listItemsReducers = (state: ListItems = Immutable.List<ListItem>(),
+  action: Action<any>): ListItems => {
+  
+  if (isType(action, createListItemAction)) {
+    const listItem = {
+      done: action.payload.done,
+      description: action.payload.description
+    }
+    return state.push(listItem)
+  }
+  
+  return state
+}
+```
+!!Store
+Store这部分就没什么特别的了
+
+```typescript
+// store.ts
+
+import { createStore, combineReducers, Unsubscribe } from 'redux'
+import { Action } from 'listItemsActions'
+import { listItemsReducers, ListItemsState } from 'listItemsReducers'
+import { someOtherReducers, SomeOthersState } from 'someOtherReducers'
+
+const reducer = combineReducers({
+  listItems: listItemsReducers,
+  someOther: someOtherReducers
+})
+export interface State extends ListItemsState, SomeOtherState {}
+
+let store = createStore(reducer)
+
+// 给redux自带的方法上了个类型
+export const getState = () => store.getState() as State
+export const dispatch = (a:Action<any>) => store.dispatch(a)
+export const subscribeToState = (callback: () => void) => store.subscribe(callback)
+```
+
+

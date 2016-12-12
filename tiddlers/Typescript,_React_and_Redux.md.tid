@@ -1,0 +1,29 @@
+created: 20161209072422867
+modified: 20161209073529577
+tags: React Redux Typescript
+title: Typescript, React and Redux
+type: text/x-markdown
+
+## Action
+
+### [ redux-actions ]( https://github.com/acdlite/redux-actions )
+
+通过`createAction`来生成Action。
+
+### [TypeScript, React, and Redux](http://www.mattgreer.org/articles/typescript-react-and-redux/)
+
+- 定义基础的 Action
+
+```
+interface Action<T>{
+	type: string;
+	payload: T;
+  	error?: boolean;
+  	meta?: any;
+}
+```
+
+	export default Action;
+
+
+
